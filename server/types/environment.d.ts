@@ -10,6 +10,10 @@ declare global {
       DB_NAME: string;
       DB_PASS: string;
       DB_CONNECTION: Dialect;
+      SPOTIFY_TOKEN_BASE_URL: string;
+      SPOTIFY_CLIENT_ID: string;
+      SPOTIFY_CLIENT_SECRET: string;
+      SPOTIFY_SEARCH_URL: string;
       ENV: "test" | "dev" | "prod";
     }
   }
