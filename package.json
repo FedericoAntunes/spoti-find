@@ -1,0 +1,33 @@
+{
+  "name": "spoti-find",
+  "version": "1.0.0",
+  "description": "Fullstack web app",
+  "main": "server.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "back": "ts-node-dev server/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FedericoAntunes/spoti-find.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FedericoAntunes/spoti-find/issues"
+  },
+  "homepage": "https://github.com/FedericoAntunes/spoti-find#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "prettier": "^2.8.8",
+    "ts-node-dev": "^2.0.0",
+    "ts-standard": "^12.0.2",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  }
+}
