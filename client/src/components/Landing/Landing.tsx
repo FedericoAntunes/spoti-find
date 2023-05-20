@@ -1,6 +1,6 @@
-import { ServerCalls } from '../axios_calls/serverCalls'
+import { ServerCalls } from '../../axios_calls/serverCalls'
 import { useDispatch } from 'react-redux'
-import { saveToken } from '../redux/slices/tokenSlice'
+import { saveToken } from '../../redux/slices/tokenSlice'
 import { useNavigate } from 'react-router-dom'
 
 function Landing() {
@@ -11,7 +11,7 @@ function Landing() {
     try {
       const token = await ServerCalls.getToken()
       dispatch(saveToken(token))
-      navigate('/home')
+      navigate('/')
     } catch (error) {
       console.log(error)
     }
@@ -31,7 +31,10 @@ function Landing() {
           </h3>
           <p className="text-white mt-6">
             This proyect allows you to search any artist and get his albums
-            using the Spotify API
+            using the Spotify API.
+            <br />
+            To start using the app you have to click the "Start searching"
+            button.
           </p>
         </div>
         <div className="flex justify-center mt-6">
