@@ -58,3 +58,17 @@ interface SimplifiedAlbumObject {
 export interface AlbumsResponse {
   albums: SimplifiedAlbumObject[]
 }
+
+interface RawNewAlbumsResponse {
+  href: string
+  items: SimplifiedAlbumObject[]
+  limit: number | null
+  next: string | null
+  offset: number
+  previous: string | null
+  total: number
+}
+
+export interface NewAlbumsResponse {
+  albums: RawNewAlbumsResponse
+}

@@ -36,7 +36,7 @@ function AlbumCard({ serverResponseAlbums }: AlbumCardProps) {
                 </div>
               </div>
             )
-          })}{' '}
+          })}
     </>
   )
 }
