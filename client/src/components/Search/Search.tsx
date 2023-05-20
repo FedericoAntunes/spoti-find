@@ -7,6 +7,7 @@ import { ServerCalls } from '../../axios_calls/serverCalls'
 import { AlbumsResponse } from '../../types/albumsResponse'
 import { useParams } from 'react-router-dom'
 import AlbumCard from '../partials/AlbumCard'
+import { IpCall } from '../../axios_calls/ipCall'
 
 function Search() {
   const [serverResponseAlbums, setServerResponseAlbums] =
@@ -20,9 +21,11 @@ function Search() {
     const handleSearch = async () => {
       if (token && query) {
         try {
+          const ipResponse = await IpCall.getIp()
           const getAlbums = await ServerCalls.getAlbums({
             artist_name: query,
             token,
+            ip: ipResponse.ip,
           })
           setServerResponseAlbums(getAlbums)
         } catch (error) {

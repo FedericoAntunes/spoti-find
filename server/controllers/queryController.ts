@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 import { SpotifySearchCall } from '../axios_calls/spotifyCalls'
+import QueryData from '../models/QueryData'
 
 export async function index(req: Request, res: Response) {
-  const { artist_name, token } = req.body
+  const { artist_name, token, ip } = req.body
 
   try {
     const response = await SpotifySearchCall.getArtist(
@@ -12,6 +13,8 @@ export async function index(req: Request, res: Response) {
       }
     )
     const artistId = response.artists.items[0].id
+
+    const realArtistName = response.artists.items[0].name
 
     const simpleAlbums = async () => {
       const response = await SpotifySearchCall.getSimpleAlbums(
@@ -37,6 +40,8 @@ export async function index(req: Request, res: Response) {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
+
+    await QueryData.create({ ip, query: artist_name, artist: realArtistName })
 
     res.json(albums)
   } catch (error) {
