@@ -43,3 +43,19 @@ export async function index(req: Request, res: Response) {
     res.json(error)
   }
 }
+
+export async function newAlbums(req: Request, res: Response) {
+  const { token } = req.body
+
+  try {
+    const newAlbums = await SpotifySearchCall.getAlbums(
+      '/browse/new-releases',
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+    res.json(newAlbums)
+  } catch (error) {
+    res.json(error)
+  }
+}
