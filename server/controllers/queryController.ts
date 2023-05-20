@@ -12,12 +12,32 @@ export async function index(req: Request, res: Response) {
       }
     )
     const artistId = response.artists.items[0].id
+
+    const simpleAlbums = async () => {
+      const response = await SpotifySearchCall.getSimpleAlbums(
+        `/artists/${artistId}/albums?&limit=20`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+
+      let simpleAlbumsIds = ''
+
+      for (const simpleAlbum of response.items) {
+        simpleAlbumsIds.length > 0
+          ? (simpleAlbumsIds += `,${simpleAlbum.id}`)
+          : (simpleAlbumsIds += `${simpleAlbum.id}`)
+      }
+      return simpleAlbumsIds
+    }
+
     const albums = await SpotifySearchCall.getAlbums(
-      `/artists/${artistId}/albums`,
+      `/albums?ids=${await simpleAlbums()}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
+
     res.json(albums)
   } catch (error) {
     res.json(error)

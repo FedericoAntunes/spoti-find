@@ -1,11 +1,11 @@
-import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../db/connection";
+import { Model, DataTypes } from 'sequelize'
+import { sequelize } from '../db/connection'
 
 class QueryData extends Model {
-  declare id: number;
-  declare ip: string;
-  declare artist: string;
-  declare query: string;
+  declare id: number
+  declare ip: string
+  declare artist: string
+  declare query: string
 }
 
 QueryData.init(
@@ -31,8 +31,8 @@ QueryData.init(
   },
   {
     sequelize,
-    modelName: "queryData",
+    modelName: 'queryData',
   }
-);
+)
 
-export default QueryData;
+export default QueryData

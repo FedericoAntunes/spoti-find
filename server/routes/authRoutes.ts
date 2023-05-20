@@ -1,8 +1,8 @@
-import express from "express";
-import { index } from "../controllers/authController";
+import express from 'express'
+import { index } from '../controllers/authController'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", index);
+router.get('/', index)
 
-export default router;
+export default router

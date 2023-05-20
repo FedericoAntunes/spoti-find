@@ -20,6 +20,10 @@ export const SpotifySearchCall = {
     url: string,
     headers: AxiosRequestConfig
   ): Promise<ArtistResponse> => spotifyRequest.get(url, headers),
+  getSimpleAlbums: (
+    url: string,
+    headers: AxiosRequestConfig
+  ): Promise<AlbumsResponse> => spotifyRequest.get(url, headers),
   getAlbums: (
     url: string,
     headers: AxiosRequestConfig

@@ -1,8 +1,8 @@
-import express from "express";
-import { index } from "../controllers/publicController";
+import express from 'express'
+import { index } from '../controllers/publicController'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", index);
+router.get('/', index)
 
-export default router;
+export default router
