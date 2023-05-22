@@ -1,18 +1,15 @@
-import { ImageObject, external_URLs } from './common'
-
-interface restrictions {
-  reason: string
-}
+import { Artist } from './artist'
+import {
+  ImageObject,
+  external_URLs,
+  externals_ids,
+  restrictions,
+} from './common'
+import { RawSimplifiedTrackResponse } from './tracks'
 
 interface CopyrightObject {
   text: string
   type: string
-}
-
-interface externals_ids {
-  isrc: string
-  ean: string
-  upc: string
 }
 
 interface SimplifiedArtistObject {
@@ -24,7 +21,7 @@ interface SimplifiedArtistObject {
   uri: string
 }
 
-interface SimplifiedAlbumObject {
+export interface SimplifiedAlbumObject {
   album_type: string
   total_tracks: number
   available_markets: string[]
@@ -55,4 +52,9 @@ export interface AlbumsResponse {
   previous: string | null
   total: number
   items: SimplifiedAlbumObject[]
+}
+
+export interface CompleteAlbum extends SimplifiedAlbumObject {
+  artists: Artist[]
+  tracks: RawSimplifiedTrackResponse
 }

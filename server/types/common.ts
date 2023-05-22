@@ -7,3 +7,12 @@ export interface ImageObject {
   height: number | null
   width: number | null
 }
+
+export interface externals_ids {
+  isrc: string
+  ean: string
+  upc: string
+}
+export interface restrictions {
+  reason: string
+}
