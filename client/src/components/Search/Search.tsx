@@ -48,9 +48,15 @@ function Search() {
         Albums results for search:{' '}
         <span className="font-semibold">{query}</span>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-around">
-        <AlbumCard serverResponseAlbums={serverResponseAlbums} />
-      </div>
+      {serverResponseAlbums.albums ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-around">
+          <AlbumCard serverResponseAlbums={serverResponseAlbums} />
+        </div>
+      ) : (
+        <p className="text-gray-200 text-center">
+          Sorry! no results where found.
+        </p>
+      )}
     </div>
   ) : (
     <Loader />
