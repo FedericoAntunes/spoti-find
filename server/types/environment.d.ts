@@ -14,6 +14,11 @@ declare global {
       SPOTIFY_CLIENT_ID: string
       SPOTIFY_CLIENT_SECRET: string
       SPOTIFY_SEARCH_URL: string
+      DB_HOST: string
+      DB_DATABASE: string
+      DB_USERNAME: string
+      DB_PASSWORD: string
+      DB_PORT: number
       ENV: 'test' | 'dev' | 'prod'
     }
   }
