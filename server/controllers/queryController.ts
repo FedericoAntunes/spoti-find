@@ -9,7 +9,7 @@ export async function index(req: Request, res: Response) {
     const response = await SpotifySearchCall.getArtist(
       `/search?q=${artist_name}&type=artist&limit=1`,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token.access_token}` },
       }
     )
     const artistId = response.artists.items[0].id
@@ -20,7 +20,7 @@ export async function index(req: Request, res: Response) {
       const response = await SpotifySearchCall.getSimpleAlbums(
         `/artists/${artistId}/albums?&limit=20`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token.access_token}` },
         }
       )
 
@@ -37,7 +37,7 @@ export async function index(req: Request, res: Response) {
     const albums = await SpotifySearchCall.getAlbums(
       `/albums?ids=${await simpleAlbums()}`,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token.access_token}` },
       }
     )
 
@@ -56,7 +56,7 @@ export async function newAlbums(req: Request, res: Response) {
     const newAlbums = await SpotifySearchCall.getAlbums(
       '/browse/new-releases',
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token.access_token}` },
       }
     )
     res.json(newAlbums)
@@ -72,7 +72,7 @@ export async function getTracks(req: Request, res: Response) {
     const baseTracks = await SpotifySearchCall.getTracks(
       '/search?q=year:1960-2023&type=track',
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token.access_token}` },
       }
     )
     res.json(baseTracks)
@@ -88,7 +88,7 @@ export async function getFilteredTracks(req: Request, res: Response) {
     const filteredByYearTracks = await SpotifySearchCall.getTracks(
       `/search?q=year:${year_range}&type=track`,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token.access_token}` },
       }
     )
     res.json(filteredByYearTracks)
@@ -104,7 +104,7 @@ export async function getArtists(req: Request, res: Response) {
     const baseArtists = await SpotifySearchCall.getArtist(
       `/search?q=year:1980-2023&type=artist`,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token.access_token}` },
       }
     )
     res.json(baseArtists)
@@ -120,7 +120,7 @@ export async function getArtistByGenre(req: Request, res: Response) {
     const filteredArtists = await SpotifySearchCall.getArtist(
       `/search?q=genre:${genre}&type=artist`,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token.access_token}` },
       }
     )
     res.json(filteredArtists)
@@ -134,7 +134,7 @@ export async function getAlbum(req: Request, res: Response) {
 
   try {
     const album = await SpotifySearchCall.getArtist(`/albums/${album_id}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token.access_token}` },
     })
     res.json(album)
   } catch (error) {
