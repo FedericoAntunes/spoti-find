@@ -23,6 +23,7 @@ instance.interceptors.request.use(
     if (config.data.token.expiration_date <= Date.now()) {
       const newToken = await TokenCalls.getToken()
       store.dispatch(saveToken(newToken))
+      config.data.token = store.getState().token
     }
     return config
   },

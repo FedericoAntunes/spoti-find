@@ -102,9 +102,15 @@ function ExploreArtists() {
           </Slider>
         </div>
       </div>
-      <div className="grid mt-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-12">
-        <ArtistCard artistsResponse={receivedArtists} />
-      </div>
+      {receivedArtists.artists.items.length > 0 ? (
+        <div className="grid mt-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-12">
+          <ArtistCard artistsResponse={receivedArtists} />
+        </div>
+      ) : (
+        <p className="text-gray-200 mt-6 text-center">
+          Sorry! no results where found.
+        </p>
+      )}
     </div>
   ) : (
     <Loader />

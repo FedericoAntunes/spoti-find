@@ -84,9 +84,15 @@ function ExploreSongs() {
           })}
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6 xl:grid-cols-4 gap-y-8 gap-x-2">
-        <SongCard tracksResponse={receivedTracks} />
-      </div>
+      {receivedTracks.tracks.items.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6 xl:grid-cols-4 gap-y-8 gap-x-2">
+          <SongCard tracksResponse={receivedTracks} />
+        </div>
+      ) : (
+        <p className="text-gray-200 mt-6 text-center">
+          Sorry! no results where found.
+        </p>
+      )}
     </div>
   ) : (
     <Loader />
