@@ -17,6 +17,7 @@ function NewAlbumsCarousel({ albums }: NewAlbumsCarouselProps) {
     infinite: true,
     speed: 500,
     autoplay: true,
+    arrows: false,
   }
 
   return (
