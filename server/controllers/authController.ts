@@ -1,5 +1,8 @@
-import { Request, Response } from 'express'
+// Calls
 import { TokenCall } from '../axios_calls/spotifyToken'
+
+// Types
+import { Request, Response } from 'express'
 
 export async function index(_req: Request, res: Response) {
   try {

@@ -15,14 +15,14 @@ function InputSearch() {
   }
 
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form className="md:min-w-[500px]" onSubmit={(e) => e.preventDefault()}>
       <div className="flex">
         <div className="relative w-full">
           <input
             onChange={(e) => setArtistName(e.target.value)}
-            type="search"
+            type="text"
             id="search-dropdown"
-            className="block p-2.5 w-full z-20 text-sm border text-gray-900 bg-gray-50 rounded-lg"
+            className="block p-2.5 w-full z-20 bg-[#242424] text-sm border border-[#242424] text-white rounded-lg focus:bg-[#3a3a3a]"
             placeholder="Search an artist"
             required
           />
@@ -30,7 +30,7 @@ function InputSearch() {
             onClick={handleSearch}
             value={artistName}
             type="submit"
-            className="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-[#1DB954] rounded-r-lg border border-[#1DB954]"
+            className="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-[#1DB954] rounded-r-lg border border-[#1DB954] lg:hover:bg-[#55d181] lg:active:bg-[#1c8340] active:bg-[#1c8340] ease-in-out duration-200"
           >
             <svg
               aria-hidden="true"

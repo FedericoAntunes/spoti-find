@@ -1,26 +1,15 @@
-export interface external_URLs {
-  spotify: string
-}
-
-export interface ImageObject {
-  url: string
-  height: number | null
-  width: number | null
-}
-
-interface restrictions {
-  reason: string
-}
+import { Artist } from './artist'
+import {
+  ImageObject,
+  external_URLs,
+  externals_ids,
+  restrictions,
+} from './common'
+import { RawSimplifiedTrackResponse } from './tracks'
 
 interface CopyrightObject {
   text: string
   type: string
-}
-
-interface externals_ids {
-  isrc: string
-  ean: string
-  upc: string
 }
 
 interface SimplifiedArtistObject {
@@ -32,7 +21,7 @@ interface SimplifiedArtistObject {
   uri: string
 }
 
-interface SimplifiedAlbumObject {
+export interface SimplifiedAlbumObject {
   album_type: string
   total_tracks: number
   available_markets: string[]
@@ -56,19 +45,16 @@ interface SimplifiedAlbumObject {
 }
 
 export interface AlbumsResponse {
-  albums: SimplifiedAlbumObject[]
-}
-
-interface RawNewAlbumsResponse {
   href: string
-  items: SimplifiedAlbumObject[]
   limit: number | null
-  next: string | null
+  next: number | null
   offset: number
   previous: string | null
   total: number
+  items: SimplifiedAlbumObject[]
 }
 
-export interface NewAlbumsResponse {
-  albums: RawNewAlbumsResponse
+export interface CompleteAlbum extends SimplifiedAlbumObject {
+  artists: Artist[]
+  tracks: RawSimplifiedTrackResponse
 }

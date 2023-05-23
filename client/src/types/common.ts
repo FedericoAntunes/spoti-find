@@ -16,3 +16,8 @@ export interface externals_ids {
 export interface restrictions {
   reason: string
 }
+
+export interface CopyrightObject {
+  text: string
+  type: string
+}

@@ -1,5 +1,14 @@
 import { ImageObject, external_URLs } from './common'
 
+export interface SimplifiedArtistObject {
+  external_urls: external_URLs
+  href: string
+  id: string
+  name: string
+  type: string
+  uri: string
+}
+
 interface followers {
   href: string | null
   total: number
