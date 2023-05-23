@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
+
+// Types
 import { Token } from '../types/spotifyToken'
 
 const instance = axios.create({

@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 // Types
-
 import { RawSimplifiedTrackResponse } from '../types/tracks'
 import { ArtistResponse } from '../types/artist'
 import { AlbumsResponse, CompleteAlbum } from '../types/album'
