@@ -1,4 +1,7 @@
-import { AlbumsResponse } from '../../types/albumsResponse'
+import { Link } from 'react-router-dom'
+
+// Types
+import { AlbumsResponse } from '../../types/album'
 
 interface AlbumCardProps {
   serverResponseAlbums: AlbumsResponse
@@ -19,22 +22,21 @@ function AlbumCard({ serverResponseAlbums }: AlbumCardProps) {
           })
           .map((album, index) => {
             return (
-              <div
+              <Link
+                to={`/albums/${album.id}`}
                 key={index}
-                className="mx-auto w-[300px] p-4 shadow-lg bg-[#181818]"
+                className="mx-auto rounded-lg w-[90vw] md:w-[45vw] lg:w-[30vw] xl:w-[20vw] p-4 shadow-lg bg-[#181818] active:bg-[#3a3a3a] lg:hover:scale-105 ease-in-out duration-200"
               >
                 <img
-                  className="h-[300px] shadow-lg"
+                  className="w-full shadow-lg"
                   src={album.images[0].url}
-                  alt=""
+                  alt={`Album ${album.name} poster.`}
                 />
                 <div className="h-[50px] mt-4">
-                  <p className="text-white font-semibold truncate">
-                    {album.name}
-                  </p>
+                  <p className="text-white font-bold truncate">{album.name}</p>
                   <p className="text-gray-200">{album.artists[0].name}</p>
                 </div>
-              </div>
+              </Link>
             )
           })}
     </>

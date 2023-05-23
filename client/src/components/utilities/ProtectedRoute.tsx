@@ -1,5 +1,8 @@
-import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+
+// Types
 import { RootState } from '../../redux/store'
 
 interface ProtectedRouteProps {
@@ -12,6 +15,7 @@ const ProtectedRoute = ({ redirectPath }: ProtectedRouteProps) => {
   })
 
   if (!validToken) {
+    toast.error("Looks like there's been an error, please try again.")
     return <Navigate to={redirectPath} replace />
   }
 

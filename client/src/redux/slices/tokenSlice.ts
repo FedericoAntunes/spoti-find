@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
+
+// Types
 import { Token } from '../../types/tokenResponse'
 
 const initialState: Token = {
   access_token: null,
   token_type: '',
-  expires_in: 0,
+  expiration_date: null,
 }
 
 const tokenSlice = createSlice({
@@ -13,6 +15,8 @@ const tokenSlice = createSlice({
   reducers: {
     saveToken(_state, action) {
       const token = action.payload
+      token.expiration_date = Date.now() + 3600 * 1000
+      delete token.expires_in
       return token
     },
   },

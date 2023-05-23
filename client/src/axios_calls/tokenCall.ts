@@ -1,18 +1,18 @@
 import axios, { AxiosResponse } from 'axios'
 
 // Types
-import { UserIp } from '../types/userIp'
+import { TokenResponse } from '../types/tokenResponse'
 
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_IP_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
 })
 
 const responseBody = (response: AxiosResponse) => response.data
 
-const ipRequests = {
+const tokenRequests = {
   get: (url: string) => instance.get(url).then(responseBody),
 }
 
-export const IpCall = {
-  getIp: (): Promise<UserIp> => ipRequests.get('/?format=json'),
+export const TokenCalls = {
+  getToken: (): Promise<TokenResponse> => tokenRequests.get('/auth'),
 }
