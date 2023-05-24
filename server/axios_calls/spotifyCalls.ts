@@ -3,7 +3,11 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 // Types
 import { RawSimplifiedTrackResponse } from '../types/tracks'
 import { ArtistResponse } from '../types/artist'
-import { AlbumsResponse, CompleteAlbum } from '../types/album'
+import {
+  AlbumsArrayResponse,
+  AlbumsResponse,
+  CompleteAlbum,
+} from '../types/album'
 
 const instance = axios.create({
   baseURL: process.env.SPOTIFY_SEARCH_URL,
@@ -32,7 +36,7 @@ export const SpotifySearchCall = {
   getAlbums: (
     url: string,
     headers: AxiosRequestConfig
-  ): Promise<AlbumsResponse> => spotifyRequest.get(url, headers),
+  ): Promise<AlbumsArrayResponse> => spotifyRequest.get(url, headers),
   getTracks: (
     url: string,
     headers: AxiosRequestConfig

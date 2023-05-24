@@ -21,7 +21,7 @@ export async function getAlbum(req: Request, res: Response) {
 }
 
 export async function getAlbumsByArtistName(req: Request, res: Response) {
-  const { artist_name, token, ip } = req.body
+  const { artist_name, token, ip, offset } = req.body
 
   try {
     const response = await SpotifySearchCall.getArtist(
@@ -34,45 +34,67 @@ export async function getAlbumsByArtistName(req: Request, res: Response) {
 
     const realArtistName = response.artists.items[0].name
 
+    const haveMoreResults: string[] = []
+
     const simpleAlbums = async () => {
       const response = await SpotifySearchCall.getSimpleAlbums(
-        `/artists/${artistId}/albums?&limit=20`,
+        `/artists/${artistId}/albums?include_groups=album&offset=0&limit=50`,
         {
           headers: { Authorization: `Bearer ${token.access_token}` },
         }
       )
 
-      let simpleAlbumsIds = ''
+      let simpleAlbumsIds = []
+
+      response.next && haveMoreResults.push(response.next)
 
       for (const simpleAlbum of response.items) {
-        simpleAlbumsIds.length > 0
-          ? (simpleAlbumsIds += `,${simpleAlbum.id}`)
-          : (simpleAlbumsIds += `${simpleAlbum.id}`)
+        simpleAlbumsIds.push(simpleAlbum.id)
       }
       return simpleAlbumsIds
     }
 
-    const albums = await SpotifySearchCall.getAlbums(
-      `/albums?ids=${await simpleAlbums()}`,
-      {
-        headers: { Authorization: `Bearer ${token.access_token}` },
+    const albumsIds = simpleAlbums()
+
+    function divideArray(array: string[]) {
+      var subarrays = []
+      for (var i = 0; i < array.length; i += 20) {
+        var subarray = array.slice(i, i + 20)
+        subarrays.push(subarray.toString())
       }
-    )
+      return subarrays
+    }
 
-    await QueryData.create({ ip, query: artist_name, artist: realArtistName })
+    let resultAlbums = []
 
-    res.json(albums)
+    const stringArray = divideArray(await albumsIds)
+
+    for (const arr of stringArray) {
+      const albumsArray = await SpotifySearchCall.getAlbums(
+        `/albums?ids=${arr}`,
+        {
+          headers: { Authorization: `Bearer ${token.access_token}` },
+        }
+      )
+      for (const album of albumsArray.albums) {
+        resultAlbums.push(album)
+      }
+    }
+    if (!offset) {
+      await QueryData.create({ ip, query: artist_name, artist: realArtistName })
+    }
+    res.json({ returned_albums: resultAlbums })
   } catch (error) {
     res.json(error)
   }
 }
 
 export async function newAlbums(req: Request, res: Response) {
-  const { token } = req.body
+  const { token, offset } = req.body
 
   try {
     const newAlbums = await SpotifySearchCall.getAlbums(
-      '/browse/new-releases',
+      `/browse/new-releases?offset=${offset ? offset : 0}`,
       {
         headers: { Authorization: `Bearer ${token.access_token}` },
       }

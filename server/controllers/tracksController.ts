@@ -5,11 +5,11 @@ import { SpotifySearchCall } from '../axios_calls/spotifyCalls'
 import { Request, Response } from 'express'
 
 export async function getTracks(req: Request, res: Response) {
-  const { token } = req.body
+  const { token, offset } = req.body
 
   try {
     const baseTracks = await SpotifySearchCall.getTracks(
-      '/search?q=year:1960-2023&type=track',
+      `/search?q=year:1960-2023&type=track&offset=${offset ? offset : 0}`,
       {
         headers: { Authorization: `Bearer ${token.access_token}` },
       }
@@ -21,11 +21,11 @@ export async function getTracks(req: Request, res: Response) {
 }
 
 export async function getFilteredTracks(req: Request, res: Response) {
-  const { token, year_range } = req.body
+  const { token, year_range, offset } = req.body
 
   try {
     const filteredByYearTracks = await SpotifySearchCall.getTracks(
-      `/search?q=year:${year_range}&type=track`,
+      `/search?q=year:${year_range}&type=track&offset=${offset ? offset : 0}`,
       {
         headers: { Authorization: `Bearer ${token.access_token}` },
       }
