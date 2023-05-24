@@ -11,7 +11,7 @@ function AlbumCard({ serverResponseAlbums }: AlbumCardProps) {
   return (
     <>
       {serverResponseAlbums &&
-        serverResponseAlbums.albums
+        serverResponseAlbums.returned_albums
           .sort((a, b) => {
             if (a.popularity && b.popularity) {
               if (a.popularity > b.popularity) return -1

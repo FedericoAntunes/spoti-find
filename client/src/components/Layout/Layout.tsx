@@ -6,7 +6,7 @@ import PreviousPage from './PreviousPage'
 
 function Layout() {
   return (
-    <div>
+    <div id="top">
       <div className="mb-[4.1rem]">
         <Header />
       </div>

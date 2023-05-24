@@ -5,11 +5,11 @@ import { SpotifySearchCall } from '../axios_calls/spotifyCalls'
 import { Request, Response } from 'express'
 
 export async function getArtists(req: Request, res: Response) {
-  const { token } = req.body
+  const { token, offset } = req.body
 
   try {
     const baseArtists = await SpotifySearchCall.getArtist(
-      `/search?q=year:1980-2023&type=artist`,
+      `/search?q=year:1980-2023&type=artist&offset=${offset ? offset : 0}`,
       {
         headers: { Authorization: `Bearer ${token.access_token}` },
       }
@@ -21,11 +21,11 @@ export async function getArtists(req: Request, res: Response) {
 }
 
 export async function getArtistByGenre(req: Request, res: Response) {
-  const { token, genre } = req.body
+  const { token, genre, offset } = req.body
 
   try {
     const filteredArtists = await SpotifySearchCall.getArtist(
-      `/search?q=genre:${genre}&type=artist`,
+      `/search?q=genre:${genre}&type=artist&offset=${offset ? offset : 0}`,
       {
         headers: { Authorization: `Bearer ${token.access_token}` },
       }

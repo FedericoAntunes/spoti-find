@@ -32,8 +32,9 @@ export interface SimplifiedAlbumObject {
 }
 
 export interface AlbumsResponse {
-  albums: SimplifiedAlbumObject[]
+  returned_albums: SimplifiedAlbumObject[]
   tracks: RawSimplifiedTrackObject
+  next: string | undefined
 }
 
 interface RawNewAlbumsResponse {

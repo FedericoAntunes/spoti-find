@@ -47,11 +47,15 @@ export interface SimplifiedAlbumObject {
 export interface AlbumsResponse {
   href: string
   limit: number | null
-  next: number | null
+  next: string | null
   offset: number
   previous: string | null
   total: number
   items: SimplifiedAlbumObject[]
+}
+
+export interface AlbumsArrayResponse {
+  albums: AlbumsResponse[]
 }
 
 export interface CompleteAlbum extends SimplifiedAlbumObject {
