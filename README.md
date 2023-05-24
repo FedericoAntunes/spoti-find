@@ -6,7 +6,7 @@
 
 ## About the project
 
-Spoti-Find is a web project that allows the users to explore songs, discover new artists or find albums by the artist's name. \
+SpotiFind is a web project that allows the users to explore songs, discover new artists or find albums by the artist's name. \
 This project uses the [Spotify Web API](https://developer.spotify.com/) to get the information of an artist and his albums.
 
 ## Quick Start
