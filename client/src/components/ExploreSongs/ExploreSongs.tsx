@@ -12,6 +12,7 @@ import { RootState } from '../../redux/store'
 import SongCard from './SongCard'
 import Loader from '../Loader/Loader'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import SongCardLoader from './SongCardLoader'
 
 function ExploreSongs() {
   const [receivedTracks, setReceivedTracks] = useState<RawTracksResponse>()
@@ -19,6 +20,7 @@ function ExploreSongs() {
   const [activePeriod, setActivePeriod] = useState<number | null>(null)
   const [offset, setOffset] = useState<number>(0)
   const [totalTracks, setTotalTracks] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const token = useSelector((state: RootState) => state.token)
 
@@ -45,6 +47,7 @@ function ExploreSongs() {
 
   useEffect(() => {
     async function getFilteredTracks() {
+      setLoading(true)
       if (token && yearRange) {
         try {
           const getFilteredTracks = await ServerCalls.getTracks(
@@ -62,6 +65,7 @@ function ExploreSongs() {
           console.log(error)
         }
       }
+      setLoading(false)
     }
     getFilteredTracks()
   }, [yearRange])
@@ -176,7 +180,11 @@ function ExploreSongs() {
           }
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6 xl:grid-cols-4 gap-y-8 gap-x-2">
-            <SongCard tracksResponse={receivedTracks} />
+            {loading ? (
+              <SongCardLoader />
+            ) : (
+              <SongCard tracksResponse={receivedTracks} />
+            )}
           </div>
         </InfiniteScroll>
       ) : (

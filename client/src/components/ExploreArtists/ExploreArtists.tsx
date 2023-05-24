@@ -13,12 +13,14 @@ import { RootState } from '../../redux/store'
 import Loader from '../Loader/Loader'
 import ArtistCard from './ArtistCard'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import ArtistCardLoader from './ArtistCardLoader'
 
 function ExploreArtists() {
   const [receivedArtists, setReceivedArtists] = useState<ArtistResponse>()
   const [actualGenre, setActualGenre] = useState<string | null>(null)
   const [totalArtists, setTotalArtists] = useState<number>(0)
   const [offset, setOffset] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const token = useSelector((state: RootState) => state.token)
 
@@ -46,6 +48,7 @@ function ExploreArtists() {
   useEffect(() => {
     setOffset(0)
     async function getFilteredTracks() {
+      setLoading(true)
       if (token && actualGenre) {
         try {
           const getFilteredArtists = await ServerCalls.getArtists(
@@ -63,6 +66,7 @@ function ExploreArtists() {
           console.log(error)
         }
       }
+      setLoading(false)
     }
     getFilteredTracks()
   }, [actualGenre])
@@ -195,7 +199,11 @@ function ExploreArtists() {
           }
         >
           <div className="grid mt-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-12">
-            <ArtistCard artistsResponse={receivedArtists} />
+            {loading ? (
+              <ArtistCardLoader />
+            ) : (
+              <ArtistCard artistsResponse={receivedArtists} />
+            )}
           </div>
         </InfiniteScroll>
       ) : (
