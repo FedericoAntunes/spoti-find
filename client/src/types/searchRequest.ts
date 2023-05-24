@@ -7,4 +7,5 @@ export interface SearchRequest {
   year_range?: string
   genre?: string
   album_id?: string
+  offset?: number | null
 }

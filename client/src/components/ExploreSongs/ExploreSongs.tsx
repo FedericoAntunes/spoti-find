@@ -11,11 +11,14 @@ import { RootState } from '../../redux/store'
 // Components
 import SongCard from './SongCard'
 import Loader from '../Loader/Loader'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 function ExploreSongs() {
   const [receivedTracks, setReceivedTracks] = useState<RawTracksResponse>()
   const [yearRange, setYearRange] = useState<string | null>(null)
   const [activePeriod, setActivePeriod] = useState<number | null>(null)
+  const [offset, setOffset] = useState<number>(0)
+  const [totalTracks, setTotalTracks] = useState<number>(0)
 
   const token = useSelector((state: RootState) => state.token)
 
@@ -23,13 +26,15 @@ function ExploreSongs() {
     async function getTracks() {
       if (token) {
         try {
-          const response = await ServerCalls.getTracks(
+          const getTracks = await ServerCalls.getTracks(
             '/tracks/initial_tracks',
             {
               token,
             }
           )
-          setReceivedTracks(response)
+          setTotalTracks(totalTracks + getTracks.tracks.items.length)
+          setOffset(offset + getTracks.tracks.items.length)
+          setReceivedTracks(getTracks)
         } catch (error) {
           console.log(error)
         }
@@ -42,14 +47,17 @@ function ExploreSongs() {
     async function getFilteredTracks() {
       if (token && yearRange) {
         try {
-          const response = await ServerCalls.getTracks(
+          const getFilteredTracks = await ServerCalls.getTracks(
             '/tracks/filtered_tracks',
             {
               token,
               year_range: yearRange,
+              offset: 0,
             }
           )
-          setReceivedTracks(response)
+          setTotalTracks(getFilteredTracks.tracks.items.length)
+          setOffset(getFilteredTracks.tracks.items.length)
+          setReceivedTracks(getFilteredTracks)
         } catch (error) {
           console.log(error)
         }
@@ -57,6 +65,62 @@ function ExploreSongs() {
     }
     getFilteredTracks()
   }, [yearRange])
+
+  const handleGetMoreTracks = async () => {
+    if (token && yearRange) {
+      try {
+        const getMoreTracks = await ServerCalls.getTracks(
+          `/tracks/filtered_tracks`,
+          {
+            token,
+            year_range: yearRange,
+            offset,
+          }
+        )
+        setTotalTracks(totalTracks + getMoreTracks.tracks.items.length)
+        setOffset(offset + getMoreTracks.tracks.items.length)
+        if (receivedTracks) {
+          const allAlbums = [
+            ...receivedTracks.tracks.items,
+            ...getMoreTracks.tracks.items,
+          ]
+          getMoreTracks.tracks.items = allAlbums
+          setReceivedTracks(getMoreTracks)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    } else if (token) {
+      try {
+        const getMoreTracks = await ServerCalls.getTracks(
+          `/tracks/initial_tracks`,
+          {
+            token,
+            offset,
+          }
+        )
+        setTotalTracks(totalTracks + getMoreTracks.tracks.items.length)
+        setOffset(offset + getMoreTracks.tracks.items.length)
+        if (receivedTracks) {
+          const allAlbums = [
+            ...receivedTracks.tracks.items,
+            ...getMoreTracks.tracks.items,
+          ]
+          getMoreTracks.tracks.items = allAlbums
+          setReceivedTracks(getMoreTracks)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+  const handleClickScroll = () => {
+    const element = document.getElementById('top')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   const years = [1960, 1970, 1980, 1990, 2000, 2010]
 
@@ -85,9 +149,36 @@ function ExploreSongs() {
         </div>
       </div>
       {receivedTracks.tracks.items.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6 xl:grid-cols-4 gap-y-8 gap-x-2">
-          <SongCard tracksResponse={receivedTracks} />
-        </div>
+        <InfiniteScroll
+          dataLength={totalTracks}
+          next={handleGetMoreTracks}
+          hasMore={receivedTracks.tracks.next ? true : false}
+          loader={
+            <img
+              className="mx-auto w-16 mt-6"
+              src="https://digital-business-schweiz.ch/wp-content/uploads/2020/02/global_loader.gif"
+              alt="Loading"
+            />
+          }
+          endMessage={
+            <p className="text-center mt-8 text-gray-200">
+              <b>
+                You have seen it all, want to{' '}
+                <span
+                  className="text-[#1DB954] lg:hover:text-[#55d181] active:text-[#1c8340] lg:active:text-[#1c8340] ease-in-out duration-200 cursor-pointer"
+                  onClick={handleClickScroll}
+                >
+                  {' '}
+                  go back to top?
+                </span>
+              </b>
+            </p>
+          }
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-6 xl:grid-cols-4 gap-y-8 gap-x-2">
+            <SongCard tracksResponse={receivedTracks} />
+          </div>
+        </InfiniteScroll>
       ) : (
         <p className="text-gray-200 mt-6 text-center">
           Sorry! no results where found.
