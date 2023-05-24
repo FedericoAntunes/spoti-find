@@ -1,4 +1,4 @@
-# **Spoti-Find**
+# **SpotiFind**
 
 <p align="center">
 <img src="images/spotifind_hero.png" width="1000">
