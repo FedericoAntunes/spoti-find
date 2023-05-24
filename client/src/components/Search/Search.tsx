@@ -37,12 +37,6 @@ function Search() {
             token: token,
             ip: ipResponse.ip,
           })
-          console.log('[Albums]', getAlbums)
-
-          console.log(
-            '[Returned Albums length]',
-            getAlbums.returned_albums.length
-          )
           setOffset(getAlbums.returned_albums.length)
           setTotalAlbums(getAlbums.returned_albums.length)
           setServerResponseAlbums(getAlbums)
