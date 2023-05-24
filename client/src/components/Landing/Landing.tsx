@@ -63,6 +63,17 @@ function Landing() {
                   </Link>
                   .
                 </p>
+                <p className="text-white">
+                  This is a open source project, you can{' '}
+                  <Link
+                    className="text-[#1DB954] underline lg:hover:text-[#55d181] active:text-[#1c8340] ease-in-out duration-200"
+                    to={'https://github.com/FedericoAntunes/spoti-find'}
+                    target="_blank"
+                  >
+                    contribute
+                  </Link>{' '}
+                  or open an issue to discuss what you would like to change.
+                </p>
                 <p className="text-white mt-4">
                   To start using the app click on the "Start searching" button.
                 </p>
